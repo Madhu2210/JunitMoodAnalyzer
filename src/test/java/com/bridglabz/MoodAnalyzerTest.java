@@ -5,21 +5,23 @@ import org.junit.*;
 
 public class MoodAnalyzerTest {
     @Test
-    public void givenMessageWhenContainsSadItShouldReturnSadMood()throws MoodAnalyzerException {
+    public void givenMessageWhenContainsSadItShouldReturnSadMood() throws MoodAnalyzerException {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in sad mood");
         String actualResult = moodAnalyzer.moodAnalyzer();
         String expectedMood = "sad";
         Assert.assertEquals(actualResult, expectedMood);
     }
+
     @Test
-    public void givenMessageWhenContainsHappyItShouldReturnHappyMood()throws MoodAnalyzerException {
+    public void givenMessageWhenContainsHappyItShouldReturnHappyMood() throws MoodAnalyzerException {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in happy mood");
         String actualResult = moodAnalyzer.moodAnalyzer();
         String expectedMood = "happy";
         Assert.assertEquals(actualResult, expectedMood);
     }
+
     @Test
-    public void givenMessageWhenContainsAnyMoodItShouldReturnAnyMood()throws MoodAnalyzerException {
+    public void givenMessageWhenContainsAnyMoodItShouldReturnAnyMood() throws MoodAnalyzerException {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in any mood");
         String actualResult = moodAnalyzer.moodAnalyzer();
         String expectedMood = "happy";
@@ -32,10 +34,22 @@ public class MoodAnalyzerTest {
         String actualResult;
         try {
             actualResult = moodAnalyzer.moodAnalyzer();
+        } catch (MoodAnalyzerException e) {
+            String expectedMood = "happy";
+            Assert.assertEquals(expectedMood, e.message);
         }
-        catch (MoodAnalyzerException e){
-            String expectedMood="happy";
-            Assert.assertEquals(expectedMood,e.message);
+    }
+
+    @Test
+    public void givenMessageWhenEmptyShouldReturnHappy() throws MoodAnalyzerException {
+        MoodAnalyzer moodAnalyzer = new MoodAnalyzer(" ");
+        String actualResult;
+        try {
+            actualResult = moodAnalyzer.moodAnalyzer();
+        } catch (MoodAnalyzerException e) {
+            MoodAnalyzerException.ExceptionType expectedMood=MoodAnalyzerException.ExceptionType.EMPTY;
+            System.out.println(e);
+            Assert.assertEquals(expectedMood,e.exceptionType);
         }
     }
 }
